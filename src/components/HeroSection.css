@@ -1,0 +1,28 @@
+.hero-section {
+    background-image: url('../assets/images/hero-image.jpg'); 
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+  }
+  
+  .hero-content {
+    text-align: center;
+  }
+  
+  .hero-buttons .btn {
+    background-color: #ff9800; /* Example color */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+  }
+  
+  .hero-buttons .btn.book-now {
+    background-color: #f44336; /* Example color */
+  }
+  
