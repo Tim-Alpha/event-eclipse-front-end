@@ -8,41 +8,48 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  max-width: 350px;
+  min-width: 300px;
+  transition: transform 0.3s ease-in-out; /* Transition for smooth scaling */
 }
 
 .card img {
   width: 100%;
-  height: 150px;
+  height: 50%;
   object-fit: cover;
 }
 
 .card-content {
-  padding: 20px;
+  padding: 10px;
 }
 
 .card-content h3 {
-  margin: 15px 0;
+  margin: 5px 0;
   color: #333;
 }
 
 .rating {
   color: #ff9800;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .card-content p {
   color: #666;
   font-size: 14px;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .card-footer {
   border-top: 1px solid #e0e0e0;
-  padding-top: 10px;
+  padding-top: 5px;
   font-size: 12px;
   color: #888;
 }
 
 .card-footer p {
   margin: 5px 0;
+}
+
+.card.scale-hover:hover {
+  transform: scale(1.5);
 }

@@ -1,0 +1,30 @@
+.feature-icon {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .feature-icon .icon {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+  
+  .feature-icon .icon svg {
+    color: #ff9800; /* Example color for the icon */
+  }
+  
+  .feature-icon h3 {
+    margin-top: 10px;
+    color: #333;
+  }
+  
+  .feature-icon p {
+    color: #666;
+    font-size: 14px;
+  }
+  

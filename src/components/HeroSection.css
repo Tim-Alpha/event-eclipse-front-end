@@ -2,11 +2,12 @@
     background-image: url('../assets/images/hero-image.jpg'); 
     background-size: cover;
     background-position: center;
-    height: 70vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #fff;
+    margin-top: 80px;
   }
   
   .hero-content {
@@ -24,5 +25,11 @@
   
   .hero-buttons .btn.book-now {
     background-color: #f44336; /* Example color */
+  }
+
+  @media (max-width: 400px) {
+    .hero-section {
+      margin-top: 66px;
+    }
   }
   

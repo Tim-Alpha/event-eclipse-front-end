@@ -1,6 +1,10 @@
 .explore-venues {
-  padding: 50px;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+  padding-bottom: 50px;
 }
 
 .explore-venues h2 {
@@ -9,8 +13,17 @@
   color: #333;
 }
 
+.venues-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .venues-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust the min-width to match the Card width */
+  gap: 20px; /* Increase the gap for better spacing */
+  width: 90%; /* Adjust the width to center the grid better */
+  max-width: 1200px; /* Ensure the grid doesn't get too wide on large screens */
 }

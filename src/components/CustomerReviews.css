@@ -1,6 +1,7 @@
 .customer-reviews {
-  padding: 50px;
+  padding: 100px 50px;
   background-color: #f4f4f4;
+  overflow: hidden; /* Ensure the overflowing content is hidden */
 }
 
 .customer-reviews h2 {
@@ -9,8 +10,44 @@
   color: #333;
 }
 
-.reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+.reviews-container {
+  display: flex;
+  flex-direction: column;
   gap: 20px;
+}
+
+.reviews-row {
+  overflow: hidden;
+  position: relative;
+}
+
+.reviews-grid {
+  display: flex;
+  gap: 20px;
+}
+
+.scroll-left {
+  animation: scroll-left 30s linear infinite;
+}
+
+.scroll-right {
+  animation: scroll-right 30s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 20px)); /* Adjust the scroll amount */
+  }
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(50% + 20px)); /* Adjust the scroll amount */
+  }
 }
