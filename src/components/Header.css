@@ -40,11 +40,12 @@
   gap: 20px;
 }
 
-.header .destop-menu {
+.header .desktop-menu {
   display: flex;
   align-items: center;
   gap: 20px;
   justify-content: flex-end;
+  position: relative;
 }
 
 .header .logout-icon {
@@ -58,19 +59,7 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-}
-
-.header .logout-icon {
-  color: #fff;
-  font-size: 24px;
   cursor: pointer;
-}
-
-.header .profile-image {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
 }
 
 .header .menu-icon {
@@ -146,8 +135,7 @@
 .sidebar .logout {
   position: absolute;
   bottom: 20px;
-  /* width: 100%; */
-  width: 260px;
+  width: 85%;
 }
 
 .sidebar .logout a {

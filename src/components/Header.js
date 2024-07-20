@@ -3,10 +3,12 @@ import './Header.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faBars, faHome, faUser, faBriefcase, faEnvelope, faBell, faCog, faBookOpen } from '@fortawesome/free-solid-svg-icons';
 import ProfileImage from '../assets/images/profile.jpg';
+import ProfileDetails from './ProfileDetails';
 
 const Header = () => {
   const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -37,6 +39,10 @@ const Header = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const toggleProfile = () => {
+    setProfileOpen(!profileOpen);
+  };
+
   return (
     <header className={`header ${hidden ? 'hidden' : ''}`}>
       <div className="logo">Event Eclipse</div>
@@ -50,9 +56,10 @@ const Header = () => {
           <li><a href="#book"><FontAwesomeIcon icon={faBookOpen} /> Book</a></li>
         </ul>
       </nav>
-      <div className="destop-menu">
-        <img src={ProfileImage} alt="Profile" className="profile-image" />
+      <div className="desktop-menu">
+        <img src={ProfileImage} alt="Profile" className="profile-image" onClick={toggleProfile} />
         <FontAwesomeIcon icon={faSignOutAlt} className="logout-icon" />
+        <ProfileDetails isOpen={profileOpen} />
       </div>
       <div className={`sidebar ${menuOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
