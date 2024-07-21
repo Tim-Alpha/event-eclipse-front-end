@@ -60,7 +60,7 @@ const venues = [
 const ExploreVenues = () => {
   return (
     <section id="explore-venues" className="explore-venues">
-      <h2>Explore Venues Near You</h2>
+      <h2 className='section-heading'>Explore Venues Near You</h2>
       <div className='venues-container'>
         <div className="venues-grid">
           {venues.map((venue, index) => (

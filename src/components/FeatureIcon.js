@@ -11,13 +11,10 @@ const icons = {
   profile: faUserCircle
 };
 
-const FeatureIcon = ({ icon, title, description }) => {
+const FeatureIcon = ({ icon, description }) => {
   return (
     <div className="feature-icon">
-      <div className="icon">
-        <FontAwesomeIcon icon={icons[icon]} size="3x" />
-      </div>
-      <h3>{title}</h3>
+      <FontAwesomeIcon className="feature-icons" icon={icons[icon]} size="3x" />
       <p>{description}</p>
     </div>
   );

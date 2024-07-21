@@ -63,7 +63,7 @@ const reviews = [
 const CustomerReviews = () => {
   return (
     <section className="customer-reviews">
-      <h2>Customer Reviews</h2>
+      <h2 className='section-heading'>Customer Reviews</h2>
       <div className="reviews-container">
         <div className="reviews-row">
           <div className="reviews-grid scroll-left">
@@ -75,7 +75,8 @@ const CustomerReviews = () => {
                 footer={review.footer}
                 rating={review.rating}
                 width="600px"
-                height="150px"
+                height="160px"
+                scaleOnHover={true}
               />
             ))}
             {reviews.map((review, index) => (
@@ -86,7 +87,8 @@ const CustomerReviews = () => {
                 footer={review.footer}
                 rating={review.rating}
                 width="600px"
-                height="150px"
+                height="160px"
+                scaleOnHover={true}
               />
             ))}
           </div>
@@ -101,7 +103,8 @@ const CustomerReviews = () => {
                 footer={review.footer}
                 rating={review.rating}
                 width="600px"
-                height="150px"
+                height="160px"
+                scaleOnHover={true}
               />
             ))}
             {reviews.map((review, index) => (
@@ -112,7 +115,8 @@ const CustomerReviews = () => {
                 footer={review.footer}
                 rating={review.rating}
                 width="600px"
-                height="150px"
+                height="160px"
+                scaleOnHover={true}
               />
             ))}
           </div>

@@ -1,0 +1,46 @@
+.image-carousel {
+    position: relative;
+  }
+  
+  .carousel-item {
+    width: 100%;
+  }
+  
+  .carousel-item img {
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .carousel-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .carousel-controls button {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .indicator {
+    background-color: white;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:regular,bold,italic&subset=latin,latin-ext');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
@@ -6,11 +9,12 @@ body {
   
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: Montserrat, 'Josefin Sans', cursive;
   }
   
   p {
-    margin: 0;
+    margin: 5px 0 5px 0;
+    font-family: monospace;
   }
   
   button {
@@ -25,5 +29,10 @@ body {
   a {
     text-decoration: none;
     color: inherit;
+  }
+
+  .section-heading {
+    font-size: 55px;
+    font-weight: 600;
   }
   

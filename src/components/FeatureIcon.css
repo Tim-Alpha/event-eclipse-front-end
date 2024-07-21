@@ -1,30 +1,46 @@
 .feature-icon {
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.feature-icon .icon {
+  margin-right: 20px;
+}
+
+.feature-icons {
+  color: #ff9800;
+}
+
+.feature-icon p {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+  padding-left: 10px;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .feature-icon {
+    flex-direction: row;
+    align-items: flex-start;
     text-align: center;
-    margin: 20px;
   }
-  
+
   .feature-icon .icon {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
+    margin-right: 0;
+    margin-bottom: 10px;
   }
-  
-  .feature-icon .icon svg {
-    color: #ff9800; /* Example color for the icon */
+
+  .feature-icons {
+    margin-top: 23px;
   }
-  
-  .feature-icon h3 {
-    margin-top: 10px;
-    color: #333;
-  }
-  
+
   .feature-icon p {
-    color: #666;
-    font-size: 14px;
+    padding: 10px;
   }
-  
+}

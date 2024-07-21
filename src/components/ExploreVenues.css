@@ -22,8 +22,9 @@
 
 .venues-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust the min-width to match the Card width */
-  gap: 20px; /* Increase the gap for better spacing */
-  width: 90%; /* Adjust the width to center the grid better */
-  max-width: 1200px; /* Ensure the grid doesn't get too wide on large screens */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  width: 90%;
+  max-width: 1200px;
+  justify-items: center;
 }

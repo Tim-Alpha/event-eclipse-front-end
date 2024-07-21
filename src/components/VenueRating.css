@@ -1,0 +1,19 @@
+.venue-rating {
+    display: flex;
+    align-items: center;
+  }
+  
+  .star-icon {
+    color: gold;
+    margin-right: 5px;
+  }
+  
+  .rating {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+  
+  .reviews {
+    color: gray;
+  }
+  
