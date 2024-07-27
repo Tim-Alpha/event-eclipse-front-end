@@ -21,7 +21,7 @@ const Registration = () => {
     password: '',
     email: '',
     role: 'USER',
-    dob: '',
+    dob: null,
     address: '',
     mobile: ''
   });

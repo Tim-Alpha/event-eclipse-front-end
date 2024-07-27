@@ -4,12 +4,14 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import './Card.css';
 import defaultImage from '../assets/images/venue2.jpg';
 
-const Card = ({ image, title, description, footer, rating, width, height, scaleOnHover = false }) => {
+const Card = ({ image, title, description, ownerName, ownerProfile, verified, footer, rating, width, height, scaleOnHover = false }) => {
   const [imgSrc, setImgSrc] = useState(image);
+  const [ownerSrc, setOwnerSrc] = useState(ownerProfile);
   const [loading, setLoading] = useState(!!image);
 
   const handleError = () => {
     setImgSrc(defaultImage);
+    setOwnerSrc(ownerProfile);
     setLoading(false);
   };
 
@@ -40,6 +42,14 @@ const Card = ({ image, title, description, footer, rating, width, height, scaleO
       )}
       <div className="card-content">
         {title && <h3>{title}</h3>}
+        {ownerName &&
+          <div className='display-owner'>
+            <div>
+              {<p id='owner-lable'>owner <span className='verified' >{verified ? "Verified" : ""}</span></p>}
+              {<h3>{ownerName}</h3>}
+            </div>
+            {ownerProfile && <img id='owner-profile' src={ownerSrc || ownerProfile} />}
+          </div>}
         {rating && <div className="rating">{rating}</div>}
         {description && <p>{description}</p>}
         {footer && <div className="card-footer">{footer}</div>}

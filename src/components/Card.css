@@ -3,7 +3,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 10px;
-  text-align: center;
+  text-align: left;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -11,6 +11,7 @@
   max-width: 350px;
   min-width: 300px;
   transition: transform 0.3s ease-in-out;
+  padding-left: 10px;
 }
 
 .card img {
@@ -52,4 +53,30 @@
 
 .card.scale-hover:hover {
   transform: scale(1.03);
+}
+
+#owner-profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #333;
+}
+
+.display-owner {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+}
+
+#owner-lable {
+  position: relative;
+  left: -20%;
+  text-align: left;
+  margin-left: 35px;
+}
+
+.verified {
+  color: green;
 }

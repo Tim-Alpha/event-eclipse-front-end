@@ -49,6 +49,9 @@ const ExploreVenues = () => {
                 image={venue.imageUrl}
                 title={venue.venueName}
                 description={venue.description}
+                ownerName={venue.owner.firstName? venue.owner.firstName + " " + venue.owner.lastName : venue.owner.username}
+                ownerProfile={venue.owner.profileUrl}
+                verified={venue.owner.isEmailVerified? venue.owner.isEmailVerified : venue.owner.isMobileVerified}
                 footer={`Location: ${venue.location}`}
                 width="300px"
                 height="350px"
