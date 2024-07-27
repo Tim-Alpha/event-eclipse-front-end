@@ -4,29 +4,30 @@ import { useDispatch } from 'react-redux';
 import { login } from '../slices/userSlice';
 import Header from './Header';
 import Footer from './Footer';
-import "./Login.css";
-import log from "../assets/lotify/Log.json";
+import './Login.css';
+import log from '../assets/lotify/Log.json';
 import Lottie from 'lottie-react';
-import { FaUser, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
+import { FaUser, FaEye, FaEyeSlash, FaLock } from 'react-icons/fa';
 import axios from 'axios';
 import IsMobile from './MobileDetection';
 import Loader from './Loader';
-import DialogBoxPopup from './DialogBox';
+import Toaster from './Toaster';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isChecked, setIsChecked] = useState(false);
-  const [disableClass, setDisableClass] = useState("");
+  const [disableClass, setDisableClass] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [statusCode, setStatusCode] = useState(null);
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isMobile = IsMobile();
 
   useEffect(() => {
-    isMobile ? setDisableClass('disableMe') : setDisableClass("");
+    setDisableClass(isMobile ? 'disableMe' : '');
   }, [isMobile]);
 
   const handleLogin = async (e) => {
@@ -35,23 +36,27 @@ const Login = () => {
     try {
       const response = await axios.post('users/login', {
         username,
-        password
+        password,
       });
-      const data = response.data;
-
-      if (data.status === 'success') {
-        setStatusCode(200);
+      const data = response.data.data;
+      setStatusCode(response.status);
+      if (response.status === 200) {
+        setMessage('Login successful');
+        console.log('HTTP Status Code:', response.status);
+        console.log('USER', response.data.data);
         if (isChecked) {
           localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
         }
         dispatch(login({ token: data.token, user: data.user }));
         navigate('/home');
       } else {
-        setStatusCode(400);
+        setMessage('Invalid credentials');
       }
     } catch (error) {
-      console.error("Login Failed:", error);
+      console.error('Login Failed:', error);
       setStatusCode(500);
+      setMessage('Something went wrong while login');
     } finally {
       setLoading(false);
     }
@@ -59,62 +64,66 @@ const Login = () => {
 
   return (
     <>
-      {loading && <Loader />}
-      {statusCode && <DialogBoxPopup statusCode={statusCode} />}
+      {statusCode && <Toaster message={message} statusCode={statusCode} />}
       <Header />
       <div>
         <div className='main'>
-          <div className="container">
+          <div className='container'>
             <div className={`animatedSvg ${disableClass}`}>
               <Lottie className={disableClass} animationData={log} />
             </div>
             <form onSubmit={handleLogin}>
               <h1>Login</h1>
-              <div className="input-box">
+              <div className='input-box'>
                 <input
-                  type="text"
-                  placeholder="Username"
-                  id="username"
+                  type='text'
+                  placeholder='Username'
+                  id='username'
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
                 />
                 <FaUser className='icon' />
               </div>
-              <div className="input-box">
+              <div className='input-box'>
                 <input
-                  type={passwordVisible ? "text" : "password"}
+                  type={passwordVisible ? 'text' : 'password'}
                   placeholder='Password'
-                  id="password"
+                  id='password'
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                {password === "" ? (
+                {password === '' ? (
                   <FaLock className='icon' />
+                ) : passwordVisible ? (
+                  <FaEyeSlash className='icon' onClick={() => setPasswordVisible(false)} />
                 ) : (
-                  passwordVisible ? (
-                    <FaEyeSlash className='icon' onClick={() => setPasswordVisible(false)} />
-                  ) : (
-                    <FaEye className='icon' onClick={() => setPasswordVisible(true)} />
-                  )
+                  <FaEye className='icon' onClick={() => setPasswordVisible(true)} />
                 )}
               </div>
 
-              <div className="remember">
+              <div className='remember'>
                 <label className={`rememberMe ${isChecked ? 'onRememberMe' : ''}`}>
                   <input
-                    type="checkbox"
+                    type='checkbox'
                     name='check'
                     checked={isChecked}
                     onChange={() => setIsChecked(!isChecked)}
-                  />Remember me
+                  />
+                  Remember me
                 </label>
-                <p type="button" className="forgot-password" onClick={() => navigate('/forgot-password')}>Forgot Password?</p>
+                <p
+                  type='button'
+                  className='forgot-password'
+                  onClick={() => navigate('/forgot-password')}
+                >
+                  Forgot Password?
+                </p>
               </div>
 
-              <button type="submit"> Login </button>
-              <div className="register-link">
+              {loading ? <Loader /> : <button type='submit'> Login </button>}
+              <div className='register-link'>
                 <p onClick={() => navigate('/register')}>
                   Don't have an account? <span className='registerHere'>Register here</span>.
                 </p>

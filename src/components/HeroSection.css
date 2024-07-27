@@ -23,7 +23,7 @@
   }
   
   .hero-heading {
-    font-size: 5rem;
+    font-size: 7rem;
     font-weight: 700;
   }
   
@@ -32,29 +32,43 @@
     margin-top: 3px;
   }
 
+  .hero-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+    width: 100%;
+  }
+
   .hero-buttons .btn {
     background-color: #ff9800;
     color: #fff;
-    padding: 10px 20px;
+    padding: 10px;
     border: none;
-    font-size: 18px;
+    font-size: 30px;
     font-weight: 600;
     border-radius: 5px;
     margin: 10px;
     cursor: pointer;
+    /* width: 45%; */
+    max-width: 400px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .hero-buttons .btn.book-now {
     background-color: #f44336;
+    
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 768px) {
     .hero-section {
       margin-top: 66px;
     }
   
     .hero-heading {
-      font-size: 3rem;
+      font-size: 3.2rem;
       font-weight: 700;
     }
     

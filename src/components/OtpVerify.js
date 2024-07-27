@@ -4,14 +4,19 @@ import "./OtpVerify.css";
 import verify from "../assets/lotify/verify.json" 
 import Lottie from 'lottie-react'; 
 import { useNavigate } from "react-router-dom"; 
- 
+import Loader from './Loader';
+import Toaster from './Toaster';
+
 const OTPVerification = () => { 
  
   const navigate = useNavigate(); 
  
   const [userData, setUserData] = useState(() => JSON.parse(localStorage.getItem('userData'))); 
   const [mobileNumber, setMobileNumber] = useState(userData?.mobile); 
- 
+  const [loading, setLoading] = useState(false);
+  const [statusCode, setStatusCode] = useState(null);
+  const [message, setMessage] = useState('');
+
   useEffect(() => { 
     const storedUserData = JSON.parse(localStorage.getItem('userData')); 
     setUserData(storedUserData); 
@@ -44,6 +49,7 @@ const OTPVerification = () => {
  
   const handleSubmit = async (e) => { 
     e.preventDefault(); 
+    setLoading(true);
     try { 
       const enteredOTP = `${otp.digit1}${otp.digit2}${otp.digit3}${otp.digit4}`; 
       console.log("Entered OTP:", enteredOTP); 
@@ -52,12 +58,18 @@ const OTPVerification = () => {
         number: mobileNumber, 
         otp: enteredOTP 
       }); 
+      setStatusCode(200);
+      setMessage('Verification Successful');
       console.log("Verification Successful:", response.data); 
       localStorage.removeItem('userData'); 
-      // navigate('/login'); 
+      navigate('/login'); 
     } catch (error) { 
       console.error("Verification Failed:", error); 
-    } 
+      setStatusCode(500);
+      setMessage('Verification Failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   }; 
  
   if (!mobileNumber) { 
@@ -66,9 +78,11 @@ const OTPVerification = () => {
  
   return ( 
    <div className="main"> 
+    {loading && <Loader />}
+    {statusCode && <Toaster message={message} statusCode={statusCode} />}
     <div style={{ width: "25%"}}> 
-          <Lottie animationData={verify}/> 
-        </div> 
+      <Lottie animationData={verify}/> 
+    </div> 
     <div className="container-verify"> 
       <h1>OTP Verification</h1>
       <form onSubmit={handleSubmit}> 

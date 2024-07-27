@@ -71,7 +71,7 @@ const ExploreVenues = () => {
               description={venue.description}
               footer={venue.footer}
               width="300px"
-              height="400px"
+              height="350px"
               scaleOnHover={true}
             />
           ))}

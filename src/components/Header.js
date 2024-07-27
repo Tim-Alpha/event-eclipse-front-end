@@ -1,68 +1,70 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './Header.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faBars, faHome, faUser, faBriefcase, faEnvelope, faBell, faCog, faBookOpen } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faBars, faHome, faUser, faBriefcase, faEnvelope, faBell, faCog } from '@fortawesome/free-solid-svg-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login, logout } from '../slices/userSlice';
-import ProfileDetails from './ProfileDetails';
-import axios from 'axios';
 import defaultProfilePicture from '../assets/images/profile.jpg';
 import useIsLoggedIn from './useIsLoggedIn';
 
 const Header = () => {
   const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useIsLoggedIn();
   const userState = useSelector((state) => state.user);
   const { user } = userState;
   const userProfile = user?.profileUrl || defaultProfilePicture;
+  const sidebarRef = useRef(null);
 
   useEffect(() => {
+    let lastScroll = 0;
     const handleScroll = () => {
-      if (window.scrollY > window.innerHeight) {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > lastScroll && currentScroll > 80) {
         setHidden(true);
       } else {
         setHidden(false);
       }
-    };
+      lastScroll = currentScroll;
 
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (token) {
-        try {
-          const response = await axios.get('users/profile', {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          const user = response.data.user;
-          dispatch(login({ token, user }));
-        } catch (error) {
-          console.error('Failed to fetch user profile:', error);
-        }
+      if (menuOpen) {
+        setMenuOpen(false);
       }
     };
 
-    fetchUserProfile();
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    const parsedUser = user && user !== 'undefined' ? JSON.parse(user) : null;
+
+    if (token && parsedUser) {
+      dispatch(login({ token, user: parsedUser }));
+    }
   }, [dispatch, token]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
-  };
-
-  const toggleProfile = () => {
-    setProfileOpen(!profileOpen);
   };
 
   const handleLogin = () => {
@@ -74,41 +76,32 @@ const Header = () => {
     navigate('/');
   };
 
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
+
   return (
     <header className={`header ${hidden ? 'hidden' : ''}`}>
-      <div className="logo">Event Eclipse</div>
-      <nav>
-        <ul>
-          <li><a href="#home"><FontAwesomeIcon icon={faHome} /> Home</a></li>
-          <li><a href="#why-us"><FontAwesomeIcon icon={faUser} /> Why Us?</a></li>
-          <li><a href="#explore-venues"><FontAwesomeIcon icon={faBriefcase} /> Explore Venues</a></li>
-          <li><a href="#contact"><FontAwesomeIcon icon={faEnvelope} /> Contact Us</a></li>
-          <li><a href="#join-us"><FontAwesomeIcon icon={faBell} /> Join Us</a></li>
-          <li><a href="#book"><FontAwesomeIcon icon={faBookOpen} /> Book</a></li>
-        </ul>
-      </nav>
-      <div className="desktop-menu">
-        {!token ? (
-          <button onClick={handleLogin} className="btn">Login</button>
-        ) : (
+      <div className="logo-container">
+        <div className="logo">Event Eclipse</div>
+      </div>
+      <div className="actions">
+        {token ? (
           <>
-            <img src={userProfile} alt="Profile" className="profile-image" onClick={toggleProfile} />
-            <FontAwesomeIcon icon={faSignOutAlt} className="logout-icon" onClick={handleLogout} />
-            <ProfileDetails isOpen={profileOpen} user={user} />
+            <h2>{user?.username}</h2>
+            <img src={userProfile} alt="Profile" className="profile-image" onClick={handleProfileClick} />
+            <FontAwesomeIcon icon={faBars} className="menu-icon" onClick={toggleMenu} />
           </>
+        ) : (
+          <button onClick={handleLogin} className="btn">Login</button>
         )}
       </div>
       {token && (
-        <div className="menu">
-          <FontAwesomeIcon icon={faBars} className="menu-icon" onClick={toggleMenu} />
-        </div>
-      )}
-      {token && (
-        <div className={`sidebar ${menuOpen ? 'open' : ''}`}>
+        <div ref={sidebarRef} className={`sidebar ${menuOpen ? 'open' : ''}`}>
           <div className="sidebar-header">
-            <img src={userProfile} alt="Profile" className="profile-image" />
-            <h3>{user?.name || 'User'}</h3>
-            <p>{user?.email || 'user@example.com'}</p>
+            <img src={userProfile} alt="Profile" className="profile-image-menu" onClick={handleProfileClick} />
+            <h1>{user?.username}</h1>
+            <p>{user?.email}</p>
           </div>
           <ul>
             <li><a href="#home"><FontAwesomeIcon icon={faHome} /> Home</a></li>
@@ -120,7 +113,7 @@ const Header = () => {
             <li><a href="#settings"><FontAwesomeIcon icon={faCog} /> Setting</a></li>
           </ul>
           <div className="logout">
-            <a onClick={handleLogout}><FontAwesomeIcon icon={faSignOutAlt} /> Log Out</a>
+            <button className='logout-btn-menu' onClick={handleLogout}><FontAwesomeIcon icon={faSignOutAlt} /> Log Out</button>
           </div>
         </div>
       )}

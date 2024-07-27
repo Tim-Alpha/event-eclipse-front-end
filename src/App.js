@@ -1,45 +1,57 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Home from './Home';
-import OTPVerification from './components/OtpVerify';
-import AccountSetup from './components/AccountSetup';
-import Login from './components/Login';
-import Registration from './components/Registration';
-import PrivateRoute from './components/PrivateRoute';
-import ProtectedComponent from './components/ProtectedComponent';
 import './App.css';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { login } from './slices/userSlice';
 import useIsLoggedIn from './components/useIsLoggedIn';
+import PrivateRoute from './components/PrivateRoute';
+import Spinner from './components/Spinner';
+
+const Home = React.lazy(() => import('./Home'));
+const OTPVerification = React.lazy(() => import('./components/OtpVerify'));
+const AccountSetup = React.lazy(() => import('./components/AccountSetup'));
+const Login = React.lazy(() => import('./components/Login'));
+const Registration = React.lazy(() => import('./components/Registration'));
+const ProtectedComponent = React.lazy(() => import('./components/ProtectedComponent'));
 
 const App = () => {
   const dispatch = useDispatch();
   const token = useIsLoggedIn();
 
   useEffect(() => {
-    if (token) {
-      dispatch(login({ token }));
-      axios.defaults.headers = { 'event-token': token };
+    const user = localStorage.getItem('user');
+    const parsedUser = user && user !== 'undefined' ? JSON.parse(user) : null;
+
+    if (token && parsedUser) {
+      dispatch(login({ token, user: parsedUser }));
+      axios.defaults.headers.common['event-token'] = `${token}`;
+      axios.defaults.headers.common['Content-Type'] = 'application/json';
     }
   }, [dispatch, token]);
 
   axios.defaults.baseURL = "https://eventeclipsebackend.onrender.com/api/v1/";
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/home" element={<Navigate to="/" />} />
-      <Route path="/auth" element={<AccountSetup />} />
-      <Route path="/user/verify" element={<OTPVerification />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Registration />} />
-      <Route path="/protected" element={
-        <PrivateRoute>
-          <ProtectedComponent />
-        </PrivateRoute>
-      } />
-    </Routes>
+    <Suspense fallback={
+      <div style={{ width: '100vw', height: '100vh' }}>
+        <Spinner />
+      </div>
+    }>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Navigate to="/" />} />
+        <Route path="/auth" element={<AccountSetup />} />
+        <Route path="/user/verify" element={<OTPVerification />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Registration />} />
+        <Route path="/protected" element={
+          <PrivateRoute>
+            <ProtectedComponent />
+          </PrivateRoute>
+        } />
+      </Routes>
+    </Suspense>
   );
 }
 

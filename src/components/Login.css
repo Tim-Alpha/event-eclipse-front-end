@@ -1,9 +1,3 @@
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
 .main {
     height: 100%;
     display: flex;
@@ -147,4 +141,18 @@ form {
 
 .onRememberMe {
     color: #40f128;
+}
+
+.disableMe {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none;
+    }
+
+    form {
+        width: 90%;
+    }
 }

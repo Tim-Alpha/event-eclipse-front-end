@@ -1,24 +1,27 @@
-import React from 'react';
-import Header from './components/Header';
-import HeroSection from './components/HeroSection';
-import WhyUs from './components/WhyUs';
-import ExploreVenues from './components/ExploreVenues';
-import CustomerReviews from './components/CustomerReviews';
-import SustainablePractices from './components/SustainablePractices';
-import Footer from './components/Footer';
+import React, { Suspense } from 'react';
 import './App.css';
+
+const Header = React.lazy(() => import('./components/Header'));
+const HeroSection = React.lazy(() => import('./components/HeroSection'));
+const WhyUs = React.lazy(() => import('./components/WhyUs'));
+const ExploreVenues = React.lazy(() => import('./components/ExploreVenues'));
+const CustomerReviews = React.lazy(() => import('./components/CustomerReviews'));
+const SustainablePractices = React.lazy(() => import('./components/SustainablePractices'));
+const Footer = React.lazy(() => import('./components/Footer'));
 
 const App = () => {
   return (
-    <div className="App">
-      <Header />
-      <HeroSection />
-      <WhyUs />
-      <ExploreVenues />
-      <CustomerReviews />
-      <SustainablePractices />
-      <Footer />
-    </div>
+    <Suspense fallback={<div className="loading-box">Loading...</div>}>
+      <div className="App">
+        <Header />
+        <HeroSection />
+        <WhyUs />
+        <ExploreVenues />
+        <CustomerReviews />
+        <SustainablePractices />
+        <Footer />
+      </div>
+    </Suspense>
   );
 }
 
