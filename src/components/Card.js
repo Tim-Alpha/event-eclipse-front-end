@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import './Card.css';
-import defaultImage from '../assets/images/venue1.jpg'; // Your default image path
+import defaultImage from '../assets/images/venue2.jpg';
 
 const Card = ({ image, title, description, footer, rating, width, height, scaleOnHover = false }) => {
-  const [imgSrc, setImgSrc] = useState(image || defaultImage);
-  const [loading, setLoading] = useState(true);
+  const [imgSrc, setImgSrc] = useState(image);
+  const [loading, setLoading] = useState(!!image);
 
   const handleError = () => {
     setImgSrc(defaultImage);
@@ -26,14 +26,18 @@ const Card = ({ image, title, description, footer, rating, width, height, scaleO
 
   return (
     <div className={`card ${scaleClass}`} style={cardStyle}>
-      {loading && <Skeleton className="card-image-skeleton" />}
-      <img
-        src={imgSrc}
-        alt={title}
-        onError={handleError}
-        onLoad={handleLoad}
-        style={{ display: loading ? 'none' : 'block' }}
-      />
+      {image && (
+        <>
+          {loading && <Skeleton className="card-image-skeleton" />}
+          <img
+            src={imgSrc}
+            alt={title}
+            onError={handleError}
+            onLoad={handleLoad}
+            style={{ display: loading ? 'none' : 'block' }}
+          />
+        </>
+      )}
       <div className="card-content">
         {title && <h3>{title}</h3>}
         {rating && <div className="rating">{rating}</div>}

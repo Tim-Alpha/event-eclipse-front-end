@@ -1,7 +1,7 @@
 .header {
   background-color: rgba(27, 27, 27, 0.9);
   color: #fff;
-  padding: 10px 20px;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,7 +35,7 @@
   justify-content: flex-end;
   align-items: center;
   width: 50%;
-  margin-right: 30px;
+  margin-right: 10px;
   gap: 10px;
 }
 
