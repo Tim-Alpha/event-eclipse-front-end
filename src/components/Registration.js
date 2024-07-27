@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import Header from './Header';
 import './Registration.css';
+import './Login.css';
 import log from '../assets/lotify/Log.json';
 import Lottie from 'lottie-react';
 import axios from 'axios';
-import { FaUser, FaEyeSlash, FaEye, FaLock, FaEnvelope, FaCalendarAlt, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaUser, FaEyeSlash, FaEye, FaLock, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import IsMobile from './MobileDetection';
 import Loader from './Loader';
 import Toaster from './Toaster';
 import Footer from './Footer';
+import Spinner from './Spinner'
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -69,7 +71,7 @@ const Registration = () => {
       <Header />
       <div className='main'>
         <div className="container">
-          <form onSubmit={handleSubmit}>
+          <form className='form' onSubmit={handleSubmit}>
             <h1>Sign Up</h1>
             <div className="input-box">
               <FaEnvelope className="icon" />
@@ -114,57 +116,18 @@ const Registration = () => {
                 required
               />
             </div>
-            <div className="form-row">
-              <div className="input-box">
-                <FaUser className="icon" />
-                <input
-                  type="text"
-                  placeholder="First Name"
-                  id="firstName"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="input-box">
-                <FaUser className="icon" />
-                <input
-                  type="text"
-                  placeholder="Last Name"
-                  id="lastName"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </div>
-            <div className="form-row">
-              <div className="input-box">
-                <FaCalendarAlt className="icon" />
-                <input
-                  type="date"
-                  id="dob"
-                  name="dob"
-                  value={formData.dob}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="input-box">
-                <FaPhone className="icon" />
-                <input
-                  type="tel"
-                  placeholder="Mobile"
-                  id="mobile"
-                  name="mobile"
-                  pattern="[0-9]{10}"
-                  value={formData.mobile}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+            <div className="input-box">
+              <FaPhone className="icon" />
+              <input
+                type="tel"
+                placeholder="Mobile"
+                id="mobile"
+                name="mobile"
+                pattern="[0-9]{10}"
+                value={formData.mobile}
+                onChange={handleChange}
+                required
+              />
             </div>
             <div className="input-box">
               <FaMapMarkerAlt className="icon" />
@@ -178,7 +141,7 @@ const Registration = () => {
                 required
               />
             </div>
-            <button type="submit">Register</button>
+            {loading ? <Spinner /> : <button type='submit'> Login </button>}
             <div className="login-link">
               <p onClick={() => navigate('/login')}>
                 Already have an account? <span className='registerHere'>Login here</span>.

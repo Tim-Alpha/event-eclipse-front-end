@@ -1,0 +1,30 @@
+.search-venues {
+    background-color: #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .venues-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .venues-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: center;
+    gap: 20px;
+  }
+  
+  .load-more {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #f0c040;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

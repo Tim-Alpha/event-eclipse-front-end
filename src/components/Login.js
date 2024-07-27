@@ -10,7 +10,7 @@ import Lottie from 'lottie-react';
 import { FaUser, FaEye, FaEyeSlash, FaLock } from 'react-icons/fa';
 import axios from 'axios';
 import IsMobile from './MobileDetection';
-import Loader from './Loader';
+import Spinner from './Spinner'
 import Toaster from './Toaster';
 
 const Login = () => {
@@ -122,7 +122,7 @@ const Login = () => {
                 </p>
               </div>
 
-              {loading ? <Loader /> : <button type='submit'> Login </button>}
+              {loading ? <Spinner /> : <button type='submit'> Login </button>}
               <div className='register-link'>
                 <p onClick={() => navigate('/register')}>
                   Don't have an account? <span className='registerHere'>Register here</span>.

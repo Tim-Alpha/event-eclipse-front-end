@@ -76,6 +76,10 @@ const Header = () => {
     navigate('/');
   };
 
+  const navigateHome = () => {
+    navigate('/');
+  };
+
   const handleProfileClick = () => {
     navigate('/profile');
   };
@@ -83,7 +87,7 @@ const Header = () => {
   return (
     <header className={`header ${hidden ? 'hidden' : ''}`}>
       <div className="logo-container">
-        <div className="logo">Event Eclipse</div>
+        <div onClick={navigateHome} className="logo">Event Eclipse</div>
       </div>
       <div className="actions">
         {token ? (

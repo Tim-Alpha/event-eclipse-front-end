@@ -7,6 +7,7 @@ import { login } from './slices/userSlice';
 import useIsLoggedIn from './components/useIsLoggedIn';
 import PrivateRoute from './components/PrivateRoute';
 import Spinner from './components/Spinner';
+import Venues from './components/Venues';
 
 const Home = React.lazy(() => import('./Home'));
 const OTPVerification = React.lazy(() => import('./components/OtpVerify'));
@@ -34,7 +35,7 @@ const App = () => {
 
   return (
     <Suspense fallback={
-      <div style={{ width: '100vw', height: '100vh' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <Spinner />
       </div>
     }>
@@ -45,6 +46,7 @@ const App = () => {
         <Route path="/user/verify" element={<OTPVerification />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
+        <Route path='/venues/search' element={<Venues />} />
         <Route path="/protected" element={
           <PrivateRoute>
             <ProtectedComponent />
