@@ -5,6 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchDefaultResults } from '../slices/searchSlice';
 import Spinner from './Spinner';
 
+const truncateText = (text, maxLength) => {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength) + '...';
+};
+
 const ExploreVenues = () => {
   const [maxVenues, setMaxVenues] = useState(9);
   const results = useSelector((state) => state.search.results);
@@ -47,7 +52,7 @@ const ExploreVenues = () => {
               <Card
                 key={index}
                 image={venue.imageUrl}
-                title={venue.venueName}
+                title={truncateText(venue.venueName, 30)}
                 description={venue.description}
                 ownerName={venue.owner.firstName? venue.owner.firstName + " " + venue.owner.lastName : venue.owner.username}
                 ownerProfile={venue.owner.profileUrl}

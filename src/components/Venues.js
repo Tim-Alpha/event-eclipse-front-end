@@ -8,6 +8,11 @@ import Header from './Header';
 import Footer from './Footer';
 import Spinner from './Spinner';
 
+const truncateText = (text, maxLength) => {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength) + '...';
+};
+
 const Venues = () => {
   const results = useSelector((state) => state.search.results);
   const page = useSelector((state) => state.search.page);
@@ -62,7 +67,7 @@ const Venues = () => {
                   <Card
                     key={index}
                     image={venue.imageUrl}
-                    title={venue.venueName}
+                    title={truncateText(venue.venueName, 30)}
                     description={venue.description}
                     footer={`Location: ${venue.location}`}
                     width="300px"

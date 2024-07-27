@@ -40,7 +40,7 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-50% - 20px)); /* Adjust the scroll amount */
+    transform: translateX(calc(-50% - 20px));
   }
 }
 
@@ -49,6 +49,6 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(50% + 20px)); /* Adjust the scroll amount */
+    transform: translateX(calc(50% + 20px));
   }
 }
