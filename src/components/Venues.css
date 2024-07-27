@@ -15,6 +15,10 @@
     margin: auto;
 }
 
+.action {
+    margin-right: -5px;
+}
+
 .venues-grid {
     width: 100%;
     display: grid;
