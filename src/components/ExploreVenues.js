@@ -4,6 +4,7 @@ import Card from './Card';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchDefaultResults } from '../slices/searchSlice';
 import Spinner from './Spinner';
+import { useNavigate } from 'react-router-dom';
 
 const truncateText = (text, maxLength) => {
   if (text.length <= maxLength) return text;
@@ -15,6 +16,7 @@ const ExploreVenues = () => {
   const results = useSelector((state) => state.search.results);
   const isLoading = useSelector((state) => state.search.isLoading);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (results.length === 0) {
@@ -35,6 +37,10 @@ const ExploreVenues = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const handleCardClick = (uuid) => {
+    navigate(`/venues/${uuid}`);
+  };
 
   const displayedResults = results.slice(0, maxVenues);
 
@@ -60,6 +66,8 @@ const ExploreVenues = () => {
                 footer={`Location: ${venue.location}`}
                 width="300px"
                 height="350px"
+                onClick={handleCardClick}
+                venueUUID={venue.uuid}
                 scaleOnHover={true}
               />
             ))}
