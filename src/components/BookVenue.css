@@ -1,0 +1,97 @@
+.booking-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    margin: auto;
+    border-radius: 20px;
+    /* backdrop-filter: blur(6px);
+    background-color: rgba(5, 5, 5, 0.301); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.booking-inner-container {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6px);
+    background-color: rgba(5, 5, 5, 0.301);
+}
+
+input, textarea {
+    /* backdrop-filter: blur(2px); */
+    color: white;
+    background-color: transparent;
+}
+.booking-form {
+    width: 100%;
+}
+
+.booking-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: green;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.close-button {
+    position: relative;
+    padding: 10px;
+    left: 97%;
+    background-color: orange;
+    border-radius: 50%;
+}
+.close-button:hover {
+    background-color: red;
+}
