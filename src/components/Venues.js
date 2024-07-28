@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import Card from './Card';
 import './Venues.css';
@@ -22,6 +23,7 @@ const Venues = () => {
   const isLoadingMore = useSelector((state) => state.search.isLoadingMore);
   const noMoreResults = useSelector((state) => state.search.noMoreResults);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (results.length === 0) {
@@ -34,10 +36,6 @@ const Venues = () => {
       const bottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 200;
       if (bottom && !isLoadingMore && !noMoreResults) {
         const nextPage = page + 1;
-        console.log(`
-            NEXTPAGE: ${nextPage}
-            TOATA PAGE: ${totalPages}
-            `)
         if (nextPage <= totalPages) {
           dispatch(fetchResults({ query, page: nextPage }));
         } else {
@@ -49,6 +47,10 @@ const Venues = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [dispatch, isLoadingMore, page, query, noMoreResults, totalPages]);
+
+  const handleCardClick = (uuid) => {
+    navigate(`/venues/${uuid}`);
+  };
 
   return (
     <>
@@ -73,6 +75,8 @@ const Venues = () => {
                     width="300px"
                     height="350px"
                     scaleOnHover={true}
+                    onClick={handleCardClick}
+                    venueUUID={venue.uuid}
                   />
                 ))}
               </div>

@@ -4,7 +4,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import './Card.css';
 import defaultImage from '../assets/images/venue2.jpg';
 
-const Card = ({ image, title, description, userName, userProfile, ownerName, ownerProfile, verified, footer, rating, width, height, scaleOnHover = false }) => {
+const Card = ({ image, title, description, userName, userProfile, ownerName, ownerProfile, verified, footer, rating, width, height, onClick, venueUUID, scaleOnHover = false }) => {
   const [imgSrc, setImgSrc] = useState(image);
   const [ownerSrc, setOwnerSrc] = useState(ownerProfile);
   const [userSrc, setUserSrc] = useState(userProfile);
@@ -23,13 +23,14 @@ const Card = ({ image, title, description, userName, userProfile, ownerName, own
 
   const cardStyle = {
     width: width || '100%',
-    height: height || 'auto'
+    height: height || 'auto',
+    cursor: 'pointer'
   };
 
   const scaleClass = scaleOnHover ? 'scale-hover' : '';
 
   return (
-    <div className={`card ${scaleClass}`} style={cardStyle}>
+    <div className={`card ${scaleClass}`} style={cardStyle} onClick={() => onClick(venueUUID)}>
       {image && (
         <>
           {loading && <Skeleton className="card-image-skeleton" />}

@@ -8,6 +8,7 @@ import useIsLoggedIn from './components/useIsLoggedIn';
 import PrivateRoute from './components/PrivateRoute';
 import Spinner from './components/Spinner';
 import Venues from './components/Venues';
+import VenueDetails from './components/VenueDetails';
 
 const Home = React.lazy(() => import('./Home'));
 const OTPVerification = React.lazy(() => import('./components/OtpVerify'));
@@ -47,6 +48,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
         <Route path='/venues/search' element={<Venues />} />
+        <Route path='/venues/:uuid' element={<VenueDetails />} />
         <Route path="/protected" element={
           <PrivateRoute>
             <ProtectedComponent />
