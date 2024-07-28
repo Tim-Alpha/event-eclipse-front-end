@@ -61,7 +61,7 @@ const VenueDetails = () => {
                         {gallery.url_type === 'jpg' ? (
                             <img src={gallery.gallery_url} alt={`Gallery ${index}`} />
                         ) : (
-                            <video controls autoPlay loop>
+                            <video controls loop>
                                 <source src={gallery.gallery_url} type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
