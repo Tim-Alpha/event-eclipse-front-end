@@ -16,13 +16,13 @@ import './VenueDetails.css';
 const VenueDetails = () => {
     const { uuid } = useParams();
     const dispatch = useDispatch();
-    const navigate = useNavigate();  // Declare navigate
+    const navigate = useNavigate();
     const venue = useSelector((state) => state.venue.venue);
     const isLoading = useSelector((state) => state.venue.isLoading);
     const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
     const reviews = useSelector((state) => state.reviews.reviews);
     const reviewsLoading = useSelector((state) => state.reviews.isLoading);
-    const [isVisible, setIsVisible] = useState(false);  // Declare isVisible state
+    const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
         dispatch(fetchVenueByUUID(uuid));
