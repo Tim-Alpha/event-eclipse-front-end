@@ -11,6 +11,7 @@ import Reviews from './Reviews';
 import BookVenue from './BookVenue';
 import Header from './Header';
 import Footer from './Footer';
+import './VenueDetails.css';
 
 const VenueDetails = () => {
     const [isVisible, setIsVisible] = useState(false);
