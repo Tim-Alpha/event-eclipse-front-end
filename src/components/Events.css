@@ -1,0 +1,27 @@
+.events {
+    margin: 20px 0;
+}
+
+.events h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.events ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.events li {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.events h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.events p {
+    margin: 5px 0;
+}
