@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchVenueByUUID } from '../slices/venueSlice';
@@ -14,24 +14,20 @@ import Footer from './Footer';
 import './VenueDetails.css';
 
 const VenueDetails = () => {
-    const [isVisible, setIsVisible] = useState(false);
     const { uuid } = useParams();
-    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const navigate = useNavigate();  // Declare navigate
     const venue = useSelector((state) => state.venue.venue);
     const isLoading = useSelector((state) => state.venue.isLoading);
     const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
     const reviews = useSelector((state) => state.reviews.reviews);
     const reviewsLoading = useSelector((state) => state.reviews.isLoading);
-
-    const fetchReviews = useCallback(() => {
-        dispatch(fetchReviewsByVenueUUID(uuid));
-    }, [dispatch, uuid]);
+    const [isVisible, setIsVisible] = useState(false);  // Declare isVisible state
 
     useEffect(() => {
         dispatch(fetchVenueByUUID(uuid));
-        fetchReviews();
-    }, [dispatch, uuid, fetchReviews]);
+        dispatch(fetchReviewsByVenueUUID(uuid));
+    }, [dispatch, uuid]);
 
     const handleBooking = () => {
         if (!isAuthenticated) {
