@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchVenueByUUID } from '../slices/venueSlice';
 import Spinner from './Spinner';
@@ -13,9 +13,11 @@ import BookVenue from './BookVenue';
 const VenueDetails = () => {
     const [isVisible, setIsVisible] = useState(false);
     const { uuid } = useParams();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const venue = useSelector((state) => state.venue.venue);
     const isLoading = useSelector((state) => state.venue.isLoading);
+    const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
     useEffect(() => {
         dispatch(fetchVenueByUUID(uuid));
@@ -29,19 +31,12 @@ const VenueDetails = () => {
         return <div>Venue not found</div>;
     }
 
-    const randomColors = [
-        '#e57373', '#f06292', '#ba68c8', '#9575cd', '#7986cb',
-        '#64b5f6', '#4fc3f7', '#4db6ac', '#81c784', '#aed581',
-        '#dce775', '#fff176', '#ffd54f', '#ffb74d', '#ff8a65',
-        '#a1887f', '#90a4ae'
-    ];
-
-    const getRandomColor = () => {
-        return randomColors[Math.floor(Math.random() * randomColors.length)];
-    };
-
     const handleBooking = () => {
-        setIsVisible(true);
+        if (!isAuthenticated) {
+            navigate('/login');
+        } else {
+            setIsVisible(true);
+        }
     };
 
     const handleCloseBooking = () => {
@@ -85,18 +80,6 @@ const VenueDetails = () => {
                         </div>
                     ))}
                 </Carousel>
-
-                <h2>Events</h2>
-                <div className="events-grid">
-                    {venue.events.map((event, index) => (
-                        <div key={index} className="event-box" style={{ backgroundColor: getRandomColor() }}>
-                            <p><strong>{event.name}</strong></p>
-                            <p>{event.description}</p>
-                            <p>{new Date(event.eventDate).toLocaleDateString()}</p>
-                            <p>{new Date(event.startTime).toLocaleTimeString()} - {new Date(event.endTime).toLocaleTimeString()}</p>
-                        </div>
-                    ))}
-                </div>
             </div>
             <Footer />
         </>

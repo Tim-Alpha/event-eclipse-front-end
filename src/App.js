@@ -27,8 +27,8 @@ const App = () => {
 
     if (token && parsedUser) {
       dispatch(login({ token, user: parsedUser }));
-      axios.defaults.headers.common['event-token'] = `${token}`;
-      axios.defaults.headers.common['Content-Type'] = 'application/json';
+      axios.defaults.headers['event-token'] = `${token}`;
+      axios.defaults.headers['Content-Type'] = 'application/json';
     }
   }, [dispatch, token]);
 
