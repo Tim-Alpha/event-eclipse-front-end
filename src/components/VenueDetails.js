@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchVenueByUUID } from '../slices/venueSlice';
+import { fetchReviewsByVenueUUID } from '../slices/reviewSlice';
 import Spinner from './Spinner';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import './VenueDetails.css';
+import VenueInfo from './VenueInfo';
+import OwnerInfo from './OwnerInfo';
+import Gallery from './Gallery';
+import Reviews from './Reviews';
+import BookVenue from './BookVenue';
 import Header from './Header';
 import Footer from './Footer';
-import BookVenue from './BookVenue';
 
 const VenueDetails = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -18,18 +20,17 @@ const VenueDetails = () => {
     const venue = useSelector((state) => state.venue.venue);
     const isLoading = useSelector((state) => state.venue.isLoading);
     const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+    const reviews = useSelector((state) => state.reviews.reviews);
+    const reviewsLoading = useSelector((state) => state.reviews.isLoading);
+
+    const fetchReviews = useCallback(() => {
+        dispatch(fetchReviewsByVenueUUID(uuid));
+    }, [dispatch, uuid]);
 
     useEffect(() => {
         dispatch(fetchVenueByUUID(uuid));
-    }, [dispatch, uuid]);
-
-    if (isLoading) {
-        return <Spinner />;
-    }
-
-    if (!venue) {
-        return <div>Venue not found</div>;
-    }
+        fetchReviews();
+    }, [dispatch, uuid, fetchReviews]);
 
     const handleBooking = () => {
         if (!isAuthenticated) {
@@ -43,43 +44,23 @@ const VenueDetails = () => {
         setIsVisible(false);
     };
 
+    if (isLoading || reviewsLoading) {
+        return <Spinner />;
+    }
+
+    if (!venue) {
+        return <div>Venue not found</div>;
+    }
+
     return (
         <>
             <Header />
             {isVisible && <BookVenue venueUUID={venue.uuid} onClose={handleCloseBooking} />}
             <div className="venue-details">
-                <img src={venue.imageUrl} alt={venue.venueName} className="venue-image" />
-                <h1>{venue.venueName}</h1>
-                <p>{venue.description}</p>
-                <p><strong>Location:</strong> {venue.location}</p>
-                <p><strong>Capacity:</strong> {venue.capacity}</p>
-
-                <h2>Owner</h2>
-                <div className="owner-info">
-                    <img src={venue.owner.profileUrl} alt={venue.owner.username} className="owner-profile" />
-                    <div>
-                        <p>{venue.owner.firstName} {venue.owner.lastName}</p>
-                        <p>{venue.owner.email}</p>
-                        <p>{venue.owner.mobile}</p>
-                    </div>
-                    <button onClick={handleBooking} className='btn'>Book Now</button>
-                </div>
-
-                <h2>Gallery</h2>
-                <Carousel showThumbs={false} infiniteLoop={true} autoPlay={true}>
-                    {venue.galleries.map((gallery, index) => (
-                        <div key={index}>
-                            {gallery.url_type === 'jpg' ? (
-                                <img src={gallery.gallery_url} alt={`Gallery ${index}`} />
-                            ) : (
-                                <video controls loop>
-                                    <source src={gallery.gallery_url} type="video/mp4" />
-                                    Your browser does not support the video tag.
-                                </video>
-                            )}
-                        </div>
-                    ))}
-                </Carousel>
+                <VenueInfo venue={venue} onBook={handleBooking} />
+                <OwnerInfo owner={venue.owner} />
+                <Gallery galleries={venue.galleries} />
+                <Reviews reviews={reviews} />
             </div>
             <Footer />
         </>
