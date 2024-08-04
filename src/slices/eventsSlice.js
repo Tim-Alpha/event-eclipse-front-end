@@ -4,9 +4,7 @@ import axios from 'axios';
 export const fetchEventsByVenueUUID = createAsyncThunk(
   'events/fetchEventsByVenueUUID',
   async (uuid) => {
-    const response = await axios.get(`/events/get_by_venue_uuid`, {
-      params: { uuid }
-    });
+    const response = await axios.get(`/event/venue/${uuid}`);
     return response.data.events;
   }
 );
