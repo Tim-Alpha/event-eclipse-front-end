@@ -1,9 +1,28 @@
 .owner-info {
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
 }
 
 .owner-profile {
     width: 100px;
     height: 100px;
     border-radius: 50%;
+}
+
+.owner-info h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.info-heading {
+    text-align: left;
+    width: 100%;
 }

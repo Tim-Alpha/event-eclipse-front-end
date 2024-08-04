@@ -31,7 +31,7 @@ const VenueDetails = () => {
     useEffect(() => {
         dispatch(fetchVenueByUUID(uuid));
         dispatch(fetchReviewsByVenueUUID(uuid));
-        dispatch(fetchEventsByVenueUUID(uuid));  // Fetch events
+        dispatch(fetchEventsByVenueUUID(uuid));
     }, [dispatch, uuid]);
 
     const handleBooking = () => {
