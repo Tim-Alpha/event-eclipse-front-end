@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import './Registration.css';
 import './Login.css';
@@ -11,7 +11,7 @@ import IsMobile from './MobileDetection';
 import Loader from './Loader';
 import Toaster from './Toaster';
 import Footer from './Footer';
-import Spinner from './Spinner'
+import Spinner from './Spinner';
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -56,9 +56,9 @@ const Registration = () => {
       localStorage.setItem('userData', JSON.stringify({ mobile: formData.mobile }));
       navigate('/user/verify');
     } catch (error) {
-      console.error('Registration Failed:', error);
-      setStatusCode(500);
-      setMessage('Registration Failed. Please try again.');
+      console.error('Registration Failed:', error.response?.data || error.message);
+      setStatusCode(error.response?.status || 500);
+      setMessage(error.response?.data?.message || 'Registration Failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -73,6 +73,30 @@ const Registration = () => {
         <div className="container">
           <form className='form' onSubmit={handleSubmit}>
             <h1>Sign Up</h1>
+            <div className="input-box">
+              <FaUser className="icon" />
+              <input
+                type="text"
+                placeholder="First Name"
+                id="firstName"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-box">
+              <FaUser className="icon" />
+              <input
+                type="text"
+                placeholder="Last Name"
+                id="lastName"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+              />
+            </div>
             <div className="input-box">
               <FaEnvelope className="icon" />
               <input
