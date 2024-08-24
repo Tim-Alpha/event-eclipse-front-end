@@ -14,6 +14,7 @@ import BookVenue from './BookVenue';
 import Header from './Header';
 import Footer from './Footer';
 import './VenueDetails.css';
+import PostReview from './PostReview';
 
 const VenueDetails = () => {
     const { uuid } = useParams();
@@ -63,6 +64,7 @@ const VenueDetails = () => {
                 <OwnerInfo owner={venue.owner} />
                 <Gallery galleries={venue.galleries} />
                 <Events events={events} />
+                <PostReview venueUUID={uuid}/>
                 <Reviews reviews={reviews} />
             </div>
             <Footer />

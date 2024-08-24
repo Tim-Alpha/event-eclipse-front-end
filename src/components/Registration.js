@@ -165,7 +165,7 @@ const Registration = () => {
                 required
               />
             </div>
-            {loading ? <Spinner /> : <button type='submit'> Login </button>}
+            {loading ? <Spinner /> : <button type='submit'> Sign Up </button>}
             <div className="login-link">
               <p onClick={() => navigate('/login')}>
                 Already have an account? <span className='registerHere'>Login here</span>.

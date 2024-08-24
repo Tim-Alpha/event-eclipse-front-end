@@ -12,6 +12,7 @@ const HeroSection = () => {
         <p className="hero-para">The Revolutionary Digital Heaven for finding and booking event venues</p>
         <div className="hero-buttons">
           <button className="btn book-now" onClick={() => navigate('/venues/search')}>Book Now</button>
+          <button className="btn book-now" onClick={() => navigate('/venues/create')}>Join US</button>
         </div>
       </div>
     </section>
