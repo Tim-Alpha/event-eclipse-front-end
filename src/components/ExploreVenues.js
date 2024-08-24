@@ -58,7 +58,7 @@ const ExploreVenues = () => {
               <Card
                 key={index}
                 image={venue.imageUrl}
-                title={truncateText(venue.venueName, 30)}
+                title={truncateText(venue.name, 30)}
                 description={venue.description}
                 ownerName={venue.owner.firstName? venue.owner.firstName + " " + venue.owner.lastName : venue.owner.username}
                 ownerProfile={venue.owner.profileUrl}

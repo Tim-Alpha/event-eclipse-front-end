@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Spinner from './Spinner';
 import './BookVenue.css';
+import { useNavigate } from 'react-router-dom';
 
 const BookVenue = ({ venueUUID, onClose }) => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ const BookVenue = ({ venueUUID, onClose }) => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +46,7 @@ const BookVenue = ({ venueUUID, onClose }) => {
           endTime: '',
         });
         onClose();
+        navigate(`/venues/${venueUUID}`)
       } else {
         toast.error('Failed to book event. Please try again.');
       }

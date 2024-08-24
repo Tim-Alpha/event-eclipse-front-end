@@ -10,6 +10,7 @@ import Spinner from './components/Spinner';
 import Venues from './components/Venues';
 import VenueDetails from './components/VenueDetails';
 import CreateVenue from './components/CreateVenue';
+import CreateGallery from './components/CreateGallery';
 
 const Home = React.lazy(() => import('./Home'));
 const OTPVerification = React.lazy(() => import('./components/OtpVerify'));
@@ -33,8 +34,8 @@ const App = () => {
     }
   }, [dispatch, token]);
 
-  axios.defaults.baseURL = "https://eventeclipsebackend.onrender.com/api/v1/";
-  // axios.defaults.baseURL = "http://localhost:5000/api/v1/";
+  // axios.defaults.baseURL = "https://eventeclipsebackend.onrender.com/api/v1/";
+  axios.defaults.baseURL = "http://localhost:5000/api/v1/";
 
 
   return (
@@ -52,6 +53,7 @@ const App = () => {
         <Route path="/register" element={<Registration />} />
         <Route path='/venues/search' element={<Venues />} />
         <Route path='/venues/create' element={<CreateVenue />} />
+        <Route path='/venues/:uuid/gallery/create' element={<CreateGallery />} />
         <Route path='/venues/:uuid' element={<VenueDetails />} />
         <Route path="/protected" element={
           <PrivateRoute>

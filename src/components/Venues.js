@@ -69,8 +69,8 @@ const Venues = () => {
                   <Card
                     key={index}
                     image={venue.imageUrl}
-                    title={truncateText(venue.venueName, 30)}
-                    description={venue.description}
+                    title={truncateText(venue.name, 30)}
+                    description={truncateText(venue.description, 100)}
                     footer={`Location: ${venue.location}`}
                     width="300px"
                     height="350px"

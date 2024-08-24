@@ -47,7 +47,7 @@ const CustomerReviews = () => {
                     rating={'⭐'.repeat(review.rating)}
                     footer={(
                       <>
-                        <p>{review.venue.venueName}</p>
+                        <p>{review.venue.name}</p>
                         <p>{"Location: " + review.venue?.location}</p>
                       </>
                     )}
@@ -62,7 +62,7 @@ const CustomerReviews = () => {
                     title={truncateText(review.content, 30)}
                     footer={(
                       <>
-                        <p>{review.venue.venueName}</p>
+                        <p>{review.venue.name}</p>
                         <p>{"Location: " + review.venue?.location}</p>
                       </>
                     )}
@@ -89,7 +89,7 @@ const CustomerReviews = () => {
                     rating={'⭐'.repeat(review.rating)}
                     footer={(
                       <>
-                        <p>{review.venue.venueName}</p>
+                        <p>{review.venue.name}</p>
                         <p>{"Location: " + review.venue?.location}</p>
                       </>
                     )}
@@ -108,7 +108,7 @@ const CustomerReviews = () => {
                     rating={'⭐'.repeat(review.rating)}
                     footer={(
                       <>
-                        <p>{review.venue.venueName}</p>
+                        <p>{review.venue.name}</p>
                         <p>{"Location: " + review.venue?.location}</p>
                       </>
                     )}

@@ -1,4 +1,4 @@
-.create-venue-container {
+.gallery-container {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
@@ -7,7 +7,7 @@
     border-radius: 8px;
 }
 
-.create-venue-container h2 {
+.gallery-container h2 {
     text-align: center;
     margin-bottom: 20px;
 }
@@ -22,23 +22,16 @@ label {
     margin-bottom: 5px;
 }
 
-input[type="text"],
-input[type="number"],
-input[type="file"],
-textarea {
+input[type="file"] {
     width: 100%;
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    color: #000;
 }
 
-textarea {
-    resize: vertical;
-}
-
-.submit-button {
+.submit-button,
+.back-button {
     width: 100%;
     padding: 10px;
     background-color: #4CAF50;
@@ -50,7 +43,8 @@ textarea {
     margin-top: 10px;
 }
 
-.submit-button:hover {
+.submit-button:hover,
+.back-button:hover {
     background-color: #45a049;
 }
 
