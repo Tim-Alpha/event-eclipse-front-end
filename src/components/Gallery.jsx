@@ -4,15 +4,19 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './Gallery.css';
 import { useNavigate } from 'react-router-dom';
 
-const Gallery = ({ galleries , venueUUID}) => {
+const Gallery = ({ galleries, venueUUID, venue }) => {
+    console.log("GALLERIES: -> ", galleries)
     const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem('user'))
     const handleGalleryCreation = () => {
         navigate(`/venues/${venueUUID}/gallery/create`);
     }
 
     return (
         <div className="gallery">
-            <button onClick={handleGalleryCreation}>Create Gallery</button>
+            {user && user.username === venue.owner.username && (
+                <button onClick={handleGalleryCreation}>Create Gallery</button>
+            )}
             <h2>Gallery</h2>
             {galleries.length > 0 ? (
                 <Carousel showThumbs={false} infiniteLoop={true} autoPlay={true}>

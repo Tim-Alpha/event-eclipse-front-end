@@ -51,32 +51,34 @@ const CreateGallery = () => {
   };
 
   return (
-    <div className="gallery-container">
-      <h2>Upload photos for your venue</h2>
-      {error && <div className="error-message">{error}</div>}
-      {success && <div className="success-message">{success}</div>}
-      <form onSubmit={handleSubmit} className="gallery-form">
-        <div className="form-group">
-          <label htmlFor="file">Select Image</label>
-          <input
-            type="file"
-            id="file"
-            name="file"
-            accept="image/png, image/jpeg, image/jpg, image/webp"
-            onChange={handleFileChange}
-            required
-          />
-        </div>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <button type="submit" className="submit-button">Upload Image</button>
-        )}
-      </form>
-      <button onClick={() => navigate(`/venues/${venueUUID}`)} className="back-button">
-        Back to Venue
-      </button>
-    </div>
+    <>
+      <div className="gallery-container">
+        <h2>Upload photos for your venue</h2>
+        {error && <div className="error-message">{error}</div>}
+        {success && <div className="success-message">{success}</div>}
+        <form onSubmit={handleSubmit} className="gallery-form">
+          <div className="form-group">
+            <label htmlFor="file">Select Image</label>
+            <input
+              type="file"
+              id="file"
+              name="file"
+              accept="image/png, image/jpeg, image/jpg, image/webp"
+              onChange={handleFileChange}
+              required
+            />
+          </div>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <button type="submit" className="submit-button">Upload Image</button>
+          )}
+        </form>
+        <button onClick={() => navigate(`/venues/${venueUUID}`)} className="back-button">
+          Back to Venue
+        </button>
+      </div>
+    </>
   );
 };
 

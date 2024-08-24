@@ -62,7 +62,7 @@ const VenueDetails = () => {
             <div className="venue-details">
                 <VenueInfo venue={venue} onBook={handleBooking} />
                 <OwnerInfo owner={venue.owner} />
-                <Gallery galleries={venue.galleries} venueUUID={uuid} />
+                <Gallery galleries={venue.galleries} venueUUID={uuid} venue={venue}/>
                 <Events events={events} />
                 <PostReview venueUUID={uuid}/>
                 <Reviews reviews={reviews} />
