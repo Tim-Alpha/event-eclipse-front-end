@@ -166,6 +166,7 @@
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 
 .notification-item:last-child {

@@ -52,7 +52,31 @@ const Header = () => {
     if (token && parsedUser) {
       dispatch(login({ token, user: parsedUser }));
     }
-  }, [dispatch, token]);
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.get('notification/get', {
+          headers: {
+            'event-token': localStorage.getItem('token')
+          }
+        });
+
+        if (response.status === 200) {
+          setNotifications(response.data.notifications);
+
+          const unseen = response.data.notifications.filter(notification => notification.has_seen === null).length;
+          setUnseenCount(unseen);
+
+        } else {
+          console.error('Failed to retrieve notifications:', response.data.message);
+        }
+      } catch (error) {
+        console.error('Failed to fetch notifications:', error);
+      }
+    };
+
+    fetchNotifications();
+
+  }, [dispatch, token, setNotifications, setUnseenCount]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -91,27 +115,6 @@ const Header = () => {
   const displayNotification = async () => {
     setShowNotification((prevState) => !prevState);
 
-    if (!showNotification) {
-      try {
-        const response = await axios.get('notification/get', {
-          headers: {
-            'event-token': localStorage.getItem('token')
-          }
-        });
-
-        if (response.status === 200) {
-          setNotifications(response.data.notifications);
-
-          const unseen = response.data.notifications.filter(notification => notification.has_seen === null).length;
-          setUnseenCount(unseen);
-
-        } else {
-          console.error('Failed to retrieve notifications:', response.data.message);
-        }
-      } catch (error) {
-        console.error('Failed to fetch notifications:', error);
-      }
-    }
   };
 
   const markAsSeen = async (uuid) => {
