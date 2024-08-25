@@ -7,10 +7,13 @@ import { useNavigate } from 'react-router-dom';
 import { login, logout } from '../slices/userSlice';
 import defaultProfilePicture from '../assets/images/profile.jpg';
 import useIsLoggedIn from './useIsLoggedIn';
+import axios from 'axios';
 
 const Header = () => {
   const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const [notifications, setNotifications] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useIsLoggedIn();
@@ -84,6 +87,28 @@ const Header = () => {
     navigate('/profile');
   };
 
+  const displayNotification = async () => {
+    setShowNotification((prevState) => !prevState);
+
+    if (!showNotification) {
+      try {
+        const response = await axios.get('notification/get', {
+          headers: {
+            'event-token': localStorage.getItem('token')
+          }
+        });
+
+        if (response.status === 200) {
+          setNotifications(response.data.notifications);
+        } else {
+          console.error('Failed to retrieve notifications:', response.data.message);
+        }
+      } catch (error) {
+        console.error('Failed to fetch notifications:', error);
+      }
+    }
+  };
+
   return (
     <header className={`header ${hidden ? 'hidden' : ''}`}>
       <div className="logo-container">
@@ -94,7 +119,31 @@ const Header = () => {
           <>
             <h2>{user?.username}</h2>
             <img src={userProfile} alt="Profile" className="profile-image" onClick={handleProfileClick} />
+            <FontAwesomeIcon icon={faBell} className="bell-icon" onClick={displayNotification} />
             <FontAwesomeIcon icon={faBars} className="menu-icon" onClick={toggleMenu} />
+            {showNotification && (
+              <div className='notification-container'>
+                {notifications.length > 0 ? (
+                  notifications.map((notification) => (
+                    <div key={notification.uuid} className='notification-item'>
+                      <p className='notification-content'>{notification.content}</p>
+                      <p className='notification-time'>
+                        {new Date(notification.createdAt).toLocaleDateString('en-US', {
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          hour12: true,
+                        })}
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <div className='notification-item'>No notifications available</div>
+                )}
+              </div>
+            )}
           </>
         ) : (
           <button onClick={handleLogin} className="btn">Login</button>
