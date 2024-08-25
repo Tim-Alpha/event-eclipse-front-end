@@ -14,6 +14,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [unseenCount, setUnseenCount] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useIsLoggedIn();
@@ -100,12 +101,45 @@ const Header = () => {
 
         if (response.status === 200) {
           setNotifications(response.data.notifications);
+
+          const unseen = response.data.notifications.filter(notification => notification.has_seen === null).length;
+          setUnseenCount(unseen);
+
         } else {
           console.error('Failed to retrieve notifications:', response.data.message);
         }
       } catch (error) {
         console.error('Failed to fetch notifications:', error);
       }
+    }
+  };
+
+  const markAsSeen = async (uuid) => {
+    try {
+      const currentDate = new Date().toISOString();
+      const response = await axios.put(
+        `notification/${uuid}/update`,
+        { has_seen: currentDate },
+        {
+          headers: {
+            'event-token': localStorage.getItem('token')
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        setNotifications((prevNotifications) =>
+          prevNotifications.map((notification) =>
+            notification.uuid === uuid ? { ...notification, has_seen: new Date() } : notification
+          )
+        );
+        const unseen = notifications.filter(notification => notification.has_seen === null).length - 1;
+        setUnseenCount(unseen);
+      } else {
+        console.error('Failed to update notification:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Failed to update notification:', error);
     }
   };
 
@@ -121,12 +155,15 @@ const Header = () => {
             <img src={userProfile} alt="Profile" className="profile-image" onClick={handleProfileClick} />
             <FontAwesomeIcon icon={faBell} className="bell-icon" onClick={displayNotification} />
             <FontAwesomeIcon icon={faBars} className="menu-icon" onClick={toggleMenu} />
+            {unseenCount > 0 ? <span className='dot red'></span> : <span className='dot green'></span>}
             {showNotification && (
               <div className='notification-container'>
                 {notifications.length > 0 ? (
                   notifications.map((notification) => (
-                    <div key={notification.uuid} className='notification-item'>
-                      <p className='notification-content'>{notification.content}</p>
+                    <div key={notification.uuid} className='notification-item' onClick={() => markAsSeen(notification.uuid)}>
+                      <p className={`notification-content ${notification.has_seen === null ? 'bold' : ''}`}>
+                        {notification.content}
+                      </p>
                       <p className='notification-time'>
                         {new Date(notification.createdAt).toLocaleDateString('en-US', {
                           day: 'numeric',
