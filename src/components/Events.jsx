@@ -1,28 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Events.css';
 
-const Events = ({ events }) => {
+const Events = ({ venueUUID }) => {
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const response = await axios.get(`event/venue/${venueUUID}`, {
+                    headers: {
+                        'event-token': localStorage.getItem('token')
+                    }
+                });
+                setEvents(response.data.events);
+                setLoading(false);
+            } catch (err) {
+                setError('Failed to fetch events');
+                setLoading(false);
+            }
+        };
+
+        fetchEvents();
+    }, [venueUUID]);
+
     const getCurrentDate = () => new Date();
     const getWeekFromNow = () => {
         const now = new Date();
         return new Date(now.setDate(now.getDate() + 7));
     };
 
-    const determineColor = (endTime) => {
-        const eventDate = new Date(endTime);
+    const determineColor = (eventDate) => {
+        const date = new Date(eventDate);
         const currentDate = getCurrentDate();
         const oneWeekFromNow = getWeekFromNow();
 
-        if (eventDate < currentDate) {
+        if (date < currentDate) {
             return 'past';
-        } else if (eventDate <= oneWeekFromNow) {
+        } else if (date <= oneWeekFromNow) {
             return 'current-week';
         } else {
             return 'future';
         }
     };
 
-    const sortedEvents = [...events].sort((a, b) => new Date(b.eventDate) - new Date(a.eventDate));
+    const sortedEvents = [...events].sort((a, b) => new Date(a.eventDate) - new Date(b.eventDate));
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div className="events">
@@ -30,7 +57,7 @@ const Events = ({ events }) => {
             {sortedEvents.length > 0 ? (
                 <div className="events-grid">
                     {sortedEvents.map((event) => (
-                        <div key={event.uuid} className={`event-box ${determineColor(event.endTime)}`}>
+                        <div key={event.uuid} className={`event-box ${determineColor(event.eventDate)}`}>
                             <h3>{event.name}</h3>
                             <p>Date: {new Date(event.eventDate).toLocaleDateString()}</p>
                             <p>{event.description}</p>

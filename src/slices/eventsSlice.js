@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
 
 export const fetchEventsByVenueUUID = createAsyncThunk(
   'events/fetchEventsByVenueUUID',
   async (uuid) => {
-    const response = await axios.get(`/event/venue/${uuid}`);
-    return response.data.events;
+    // const response = await axios.get(`/event/venue/${uuid}`);
+    // return response.data.events;
   }
 );
 
