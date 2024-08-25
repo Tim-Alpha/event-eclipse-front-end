@@ -44,16 +44,16 @@
 }
 
 .past {
-    background-color: green;
+    background-color: rgb(125, 187, 125);
     color: white;
 }
 
 .current-week {
-    background-color: red;
+    background-color: rgb(192, 125, 125);
     color: white;
 }
 
 .future {
-    background-color: rgb(0, 89, 255);
+    background-color: rgb(151, 170, 206);
     color: black;
 }

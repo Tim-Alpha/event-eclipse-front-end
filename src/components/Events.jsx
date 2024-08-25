@@ -57,19 +57,32 @@ const Events = ({ venueUUID }) => {
             {sortedEvents.length > 0 ? (
                 <div className="events-grid">
                     {sortedEvents.map((event) => (
-                        <div key={event.uuid} className={`event-box ${determineColor(event.eventDate)}`}>
-                            <h3>{event.name}</h3>
-                            <p>Date: {new Date(event.eventDate).toLocaleDateString()}</p>
-                            <p>{event.description}</p>
-                            <p>Start Time: {new Date(event.startTime).toLocaleTimeString()}</p>
-                            <p>End Time: {new Date(event.endTime).toLocaleTimeString()}</p>
-                            <div className="user-info">
-                                <img src={event.user.profileUrl} alt={`${event.user.firstName} ${event.user.lastName}`} />
-                                <p>Organizer: {event.user.firstName} {event.user.lastName}</p>
-                                <p>Email: {event.user.email}</p>
-                                <p>Mobile: {event.user.mobile}</p>
-                            </div>
-                        </div>
+                       <div key={event.uuid} className={`event-box ${determineColor(event.eventDate)}`}>
+                       <h3>{event.name}</h3>
+                       <p>Date: {new Date(event.eventDate).toLocaleDateString('en-US', {
+                           day: 'numeric',
+                           month: 'short', // Abbreviated month (Jan, Feb, Mar, etc.)
+                           year: 'numeric'
+                       })}</p>
+                       <p>{event.description}</p>
+                       <p>Start Time: {new Date(event.startTime).toLocaleTimeString('en-US', {
+                           hour: 'numeric',
+                           minute: 'numeric',
+                           hour12: true // 12-hour format with AM/PM
+                       })}</p>
+                       <p>End Time: {new Date(event.endTime).toLocaleTimeString('en-US', {
+                           hour: 'numeric',
+                           minute: 'numeric',
+                           hour12: true // 12-hour format with AM/PM
+                       })}</p>
+                       <div className="user-info">
+                           <img src={event.user.profileUrl} alt={`${event.user.firstName} ${event.user.lastName}`} />
+                           <p>Organizer: {event.user.firstName} {event.user.lastName}</p>
+                           <p>Email: {event.user.email}</p>
+                           <p>Mobile: {event.user.mobile}</p>
+                       </div>
+                   </div>
+                   
                     ))}
                 </div>
             ) : (
