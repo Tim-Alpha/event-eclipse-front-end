@@ -34,8 +34,8 @@ const App = () => {
     }
   }, [dispatch, token]);
 
-  // axios.defaults.baseURL = "https://eventeclipsebackend.onrender.com/api/v1/";
-  axios.defaults.baseURL = "http://localhost:5000/api/v1/";
+  axios.defaults.baseURL = "https://eventeclipsebackend.onrender.com/api/v1/";
+  // axios.defaults.baseURL = "http://localhost:5000/api/v1/";
 
 
   return (
